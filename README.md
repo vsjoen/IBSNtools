@@ -24,7 +24,7 @@ pip install -r requirements.txt
 - Some of the EXIF data is encoded in byte format and therefore not human-readable.
 
 # How to use
-After installing prerequisites and organizing your image files, run ISBNtool.py to start the program.
+After installing prerequisites and organizing your image files, run IBSNview.py to start the program.
 
 ## Folder structure
 In order for the GUI-tool to work, the images have to adhere to a certain folder structure. There should be one parent folder that contains sub-folders named after the cameras used to take the photos. In the camera folders, there should be one folder for each original photo taken by the camera. Inside the image folder, there should be exactly one image file (the original photo), as well as one sub-folder for each social network you have uploaded the original image to. Inside the social network folders there should be exactly one image that was uploaded and downloaded from the respective social network platform.
@@ -123,9 +123,16 @@ In order for the GUI-tool to work, the images have to adhere to a certain folder
             └── 5.jpg
 ```
 
+## Automatically Sort Images
+You can use the IBSNsort.py script to automatically sort your downloaded image files. In a parent folder, create one folder called "unsorted" and one folder called "sorted". Ensure that your original image files follow the folder structure of camera folder -> image folder -> image, then move the camera folders you want to use into the "sorted" folder. In the "unsorted" folder, create one folder for each social network you have downloaded images from, then place all the photos from each social network in their respective folders. Now you should be able to run the IBSNsort.py script to automatically sort the images.
+
+```
+python3 IBSNsort.py
+```
+
 ### Before sorting:
 ```
-sortFolder
+viewFolder
 ├── sorted
 │   ├── CANON_650D_720X480_INDOOR
 │   │   └── IMG_2636
@@ -145,7 +152,7 @@ sortFolder
 
 ### After sorting:
 ```
-.
+sortFolder
 ├── sorted
 │   ├── CANON_650D_720X480_INDOOR
 │   │   └── IMG_2636
@@ -169,10 +176,11 @@ sortFolder
         └── 4.jpg
 ```
 
-## Automatically Sort Images
-You can use the comp.py script to automatically sort your downloaded image files. In a parent folder, create one folder called "unsorted" and one folder called "sorted". Ensure that your original image files follow the folder structure of camera folder -> image folder -> image, then move the camera folders you want to use into the "sorted" folder. In the "unsorted" folder, create one folder for each social network you have downloaded images from, then place all the photos from each social network in their respective folders. Now you should be able to run the comp.py script to automatically sort the images.
-
 ## Viewing Image Data
-After your images are sorted, you can run the ISBNtools.py to browse through the images and their data.
+After your images are sorted, you can run IBSNview.py to browse through the images and their data.
+
+```
+python3 IBSNview.py
+```
 
 ## Exporting Image Data
