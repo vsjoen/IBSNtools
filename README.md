@@ -28,56 +28,151 @@ After installing prerequisites and organizing your image files, run ISBNtool.py 
 
 ## Folder structure
 In order for the GUI-tool to work, the images have to adhere to a certain folder structure. There should be one parent folder that contains sub-folders named after the cameras used to take the photos. In the camera folders, there should be one folder for each original photo taken by the camera. Inside the image folder, there should be exactly one image file (the original photo), as well as one sub-folder for each social network you have uploaded the original image to. Inside the social network folders there should be exactly one image that was uploaded and downloaded from the respective social network platform.
-
-```mermaid
-graph  TD
-
-A[parentFolder]  -->  B[cameraName]
-
-B  -->  C(imageName)
-
-C  -->  D(imageName.jpg)
-
-C  -->  E[facebook]
-
-E  -->  I(imageName2.jpg)
-
-C  -->  F[flickr]
-
-F  -->  J(imageName3.jpg)
-
-C  -->  G[google+]
-
-G  -->  K(imageName4.jpg)
-
-C  -->  H[instagram]
-
-H  -->  L(imageName5.jpg)
 ```
+ viewFolder
+├── CANON_650D_720X480_INDOOR
+│   ├── IMG_2635
+│   │   ├── IMG_2635.JPG
+│   │   ├── facebook
+│   │   │   └── 1.jpg
+│   │   ├── flickr
+│   │   │   └── 26204266014_76ce7dd748_b.jpg
+│   │   ├── google+
+│   │   │   └── IMG_2635.jpg
+│   │   ├── imgur
+│   │   │   └── 01\ -\ 3POgMpm.jpg
+│   │   ├── instagram
+│   │   │   └── 12818938_1140129992698752_861157192_n.jpg
+│   │   ├── telegram
+│   │   │   └── 422116736_16288720980252527992.jpg
+│   │   ├── tinypic
+│   │   │   └── 34fgw8i.jpg
+│   │   ├── tumblr
+│   │   │   └── tumblr_o3q9e2zuH21vnf44lo1_1280.jpg
+│   │   ├── twitter
+│   │   │   └── Cdp0SEgWwAAJQd8.jpg
+│   │   └── whatsapp
+│   │       └── IMG-20160314-WA0011.jpg
+│   └── IMG_2636
+│       ├── IMG_2636.JPG
+│       ├── facebook
+│       │   └── 2.jpg
+│       ├── flickr
+│       │   └── 26204266044_51bbb1f152_b.jpg
+│       ├── google+
+│       │   └── IMG_2636.jpg
+│       ├── imgur
+│       │   └── 02\ -\ i7JYrol.jpg
+│       ├── instagram
+│       │   └── 12783835_452031228326433_1890673980_n.jpg
+│       ├── telegram
+│       │   └── 421222168_1084613614143026389.jpg
+│       ├── tinypic
+│       │   └── 262ky84.jpg
+│       ├── tumblr
+│       │   └── tumblr_o3q9e2zuH21vnf44lo2_1280.jpg
+│       ├── twitter
+│       │   └── Cdp0SH4XIAEVkBC.jpg
+│       └── whatsapp
+│           └── IMG-20160314-WA0010.jpg
+├── SAMSUNG_NOTE3_NEO_3264X2448_INDOOR
+│   └── 20150213_134949
+│       ├── 20150213_134949.jpg
+│       ├── facebook
+│       │   └── 4.jpg
+│       ├── flickr
+│       │   └── 26785067056_1e92ac59e0_h.jpg
+│       ├── google+
+│       │   └── 20150213_134949.jpg
+│       ├── imgur
+│       │   └── 04\ -\ hrijZwh.jpg
+│       ├── instagram
+│       │   └── 10616644_224825451205119_1162687156_n.jpg
+│       ├── telegram
+│       │   └── 421211778_7609660349885752490.jpg
+│       ├── tinypic
+│       │   └── etw8kj.jpg
+│       ├── tumblr
+│       │   └── tumblr_o3qaitLYaa1vnf44lo8_1280.jpg
+│       ├── twitter
+│       │   └── CdqHTrwWAAA0IUm.jpg
+│       └── whatsapp
+│           └── 8.jpg
+└── SONY_POWERSHOT_A2300_4608X3456_OUTDOOR_NATURAL
+    └── IMG_9058
+        ├── IMG_9058.JPG
+        ├── facebook
+        │   └── 1.jpg
+        ├── flickr
+        │   └── 26741407941_760737c219_h.jpg
+        ├── google+
+        │   └── IMG_9058.jpg
+        ├── imgur
+        │   └── 01\ -\ WgE4eVV.jpg
+        ├── instagram
+        │   └── 1169337_1580090438985059_1840711599_n.jpg
+        ├── telegram
+        │   └── 421932970_1868051944404017215.jpg
+        ├── tinypic
+        │   └── 30kznsy.jpg
+        ├── tumblr
+        │   └── tumblr_o415wcLUAA1vnf44lo10_1280.jpg
+        ├── twitter
+        │   └── Cdp-mPDWAAAcRli.jpg
+        └── whatsapp
+            └── 5.jpg
+```
+
+### Before sorting:
+```
+sortFolder
+├── sorted
+│   ├── CANON_650D_720X480_INDOOR
+│   │   └── IMG_2636
+│   │       ├── IMG_2636.JPG
+│   ├── SAMSUNG_NOTE3_NEO_3264X2448_INDOOR
+│   │   └── 20150213_134949
+│   │       ├── 20150213_134949.jpg
+│   └── SONY_POWERSHOT_A2300_4608X3456_OUTDOOR_NATURAL
+│       └── IMG_9058
+│           ├── IMG_9058.JPG
+└── unsorted
+    └── facebook
+        ├── 1.jpg
+        ├── 2.jpg
+        └── 4.jpg
+ ```
+
+### After sorting:
+```
+.
+├── sorted
+│   ├── CANON_650D_720X480_INDOOR
+│   │   └── IMG_2636
+│   │       ├── IMG_2636.JPG
+│   │       └── facebook
+│   │           └── 2.jpg
+│   ├── SAMSUNG_NOTE3_NEO_3264X2448_INDOOR
+│   │   └── 20150213_134949
+│   │       ├── 20150213_134949.jpg
+│   │       └── facebook
+│   │           └── 4.jpg
+│   └── SONY_POWERSHOT_A2300_4608X3456_OUTDOOR_NATURAL
+│       └── IMG_9058
+│           ├── IMG_9058.JPG
+│           └── facebook
+│               └── 1.jpg
+└── unsorted
+    └── facebook
+        ├── 1.jpg
+        ├── 2.jpg
+        └── 4.jpg
+```
+
 ## Automatically Sort Images
-```mermaid
-graph  TD
-
-A[parentFolder]  -->  B[sorted]
-
-B  -->  G[cameraFolder]
-
-G  -->  H[imageFolder]
-
-H  -->  I(originalImage.jpg)
-
-A  -->  C[unsorted]
-
-C  -->  D[facebook]
-
-D  -->  E(facebookImage.jpg)
-
-D  -->  F(facebookImage2.jpg)
-
-```
+You can use the comp.py script to automatically sort your downloaded image files. In a parent folder, create one folder called "unsorted" and one folder called "sorted". Ensure that your original image files follow the folder structure of camera folder -> image folder -> image, then move the camera folders you want to use into the "sorted" folder. In the "unsorted" folder, create one folder for each social network you have downloaded images from, then place all the photos from each social network in their respective folders. Now you should be able to run the comp.py script to automatically sort the images.
 
 ## Viewing Image Data
-
+After your images are sorted, you can run the ISBNtools.py to browse through the images and their data.
 
 ## Exporting Image Data
-
