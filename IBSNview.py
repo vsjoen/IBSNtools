@@ -40,7 +40,7 @@ exifNone = {'0th': {}, 'Exif': {}, 'GPS': {}, 'Interop': {}, '1st': {}}
 
 # create the root window
 root = tk.Tk()
-root.title('IBSNtool - Image Ballistics in Social Networks')
+root.title('IBSNview - Image Ballistics in Social Networks')
 root.resizable(False, False)
 #root.geometry('1200x800')
 #root.eval('tk::PlaceWindow . center')
@@ -148,7 +148,7 @@ def prev_file():
 
 def preferences():
     prefWin = Toplevel(root)
-    prefWin.title('IBSNtool - Preferences')
+    prefWin.title('IBSNview - Preferences')
     #g_fontsize = 14
     # variable = Var(prefWin)
     # w = OptionMenu(prefWin, g_fontsize, 12, 14, 16)

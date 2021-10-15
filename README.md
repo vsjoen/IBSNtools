@@ -127,7 +127,7 @@ In order for the GUI-tool to work, the images have to adhere to a certain folder
 You can use the IBSNsort.py script to automatically sort your downloaded image files. In a parent folder, create one folder called "unsorted" and one folder called "sorted". Ensure that your original image files follow the folder structure of camera folder -> image folder -> image, then move the camera folders you want to use into the "sorted" folder. In the "unsorted" folder, create one folder for each social network you have downloaded images from, then place all the photos from each social network in their respective folders. Now you should be able to run the IBSNsort.py script to automatically sort the images.
 
 ```
-python3 IBSNsort.py
+python3 IBSNsort.py sortFolder
 ```
 
 ### Before sorting:
