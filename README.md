@@ -132,7 +132,7 @@ python3 IBSNsort.py
 
 ### Before sorting:
 ```
-viewFolder
+sortFolder
 ├── sorted
 │   ├── CANON_650D_720X480_INDOOR
 │   │   └── IMG_2636
@@ -182,5 +182,3 @@ After your images are sorted, you can run IBSNview.py to browse through the imag
 ```
 python3 IBSNview.py
 ```
-
-## Exporting Image Data
