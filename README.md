@@ -2,7 +2,7 @@
 # IBSNtools
 
 ## Description
-IBSNtools is a set of tools for analyzing image ballistics in social networks written in Python. These tools can be used to compare images uploaded to various social networks to the original image files. These tools will display whether or not the image data has been modified after being uploaded to a social network. IBSNtools analyzes whether or not the images have been re-named, re-sized or re-compressed. It also analyzes whether or not EXIF data has been stripped or modified. Quantization tables and EXIF data for the images can also be viewed. The data can also be exported to JSON format for further analysis.
+IBSNtools is a set of tools for analyzing image ballistics in social networks written in Python. These tools can be used to organize and compare images uploaded to various social networks to the original image files. The view tool will display whether or not the image data has been modified after being uploaded to a social network. IBSNview analyzes whether or not the images have been re-named, re-sized or re-compressed. It also analyzes whether or not EXIF data has been stripped or modified. Quantization tables and EXIF data for the images can also be viewed.
 
 
 ## Prerequisites
@@ -148,7 +148,7 @@ sortFolder
         ├── 1.jpg
         ├── 2.jpg
         └── 4.jpg
- ```
+```
 
 ### After sorting:
 ```
