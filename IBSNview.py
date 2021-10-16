@@ -171,7 +171,7 @@ def preferences():
 
 def exif():
     exifwin = Toplevel(root)
-    exifwin.title('Original Image - EXIF Data')
+    exifwin.title(f'{fname} - EXIF Data')
     exifText = tk.Text(exifwin, height = 140)
     for x in exifList:
         exifText.insert(END, x + '\n')
