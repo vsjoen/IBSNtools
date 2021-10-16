@@ -37,6 +37,7 @@ selImage = 0
 selselImage = ''
 hueOffset = 160
 exifNone = {'0th': {}, 'Exif': {}, 'GPS': {}, 'Interop': {}, '1st': {}}
+folderBool = 0
 
 # create the root window
 root = tk.Tk()
@@ -86,14 +87,28 @@ def hsv2rgb(h, s, v):
 def align(word, number):
     return '{:<10s}{:>10d}'.format(word, number)
 
+def select_folder():
+    global folderBool
+    folderBool = 1
+    select_file()
+
 def select_file():
     global selected_image
     global selImage
+    global folderBool
     filetypes = [('JPEG files', '.jpeg .jpg')]
 
-    filename = fd.askopenfilename(
+    if folderBool == 1:
+        folder = fd.askdirectory(
+            initialdir = './',
+             title="Choose folder")
+        allFiles = glob.glob(folder + '/*/*/*.*')
+        filename = allFiles[0]
+        folderBool = 0
+    else:
+        filename = fd.askopenfilename(
         title ='Open Image',
-        initialdir ='./viewFolder/',
+        initialdir ='./',
         filetypes = filetypes)
 
     select_file.var = filename
@@ -117,7 +132,7 @@ def path_leaf(path):
 
 def quick_file():
     global selected_image
-    selected_image = './viewFolder/CANON_650D_720X480_INDOOR/IMG_2635/IMG_2635.JPG'
+    selected_image = './imageFolder/CANON_650D_720X480_INDOOR/IMG_2635/IMG_2635.JPG'
     load_image()
     load_data()
 
@@ -261,11 +276,14 @@ canvas = tk.Canvas(mainFrameLeft, width = 468, height = 312)
 canvas.grid(padx = (20, 20), column = 0, columnspan = 1,
 row = 0, sticky = W)
 
-button_pad = 2
-ttk.Button(buttonFrame, text = 'Open Image', command = select_file).grid(column = 0, row = 1, padx = button_pad)
-ttk.Button(buttonFrame, text = '< Prev', command = next_file).grid(column = 1, row = 1, padx = button_pad)
-ttk.Button(buttonFrame, text = 'Next >', command = prev_file).grid(column = 2, row = 1, padx = button_pad)
-ttk.Button(buttonFrame, text = 'View Exif', command = exif).grid(column = 3, row = 1, padx = button_pad)
+button_pad = 0
+btny = 7
+btnx = 1
+tk.Button(buttonFrame, text = 'Open Folder', command = select_folder).grid(column = 0, row = 1, padx = button_pad, ipady=btny, ipadx=btnx)
+tk.Button(buttonFrame, text = 'Open Image', command = select_file).grid(column = 1, row = 1, padx = button_pad, ipady=btny, ipadx=btnx)
+tk.Button(buttonFrame, text = '< Prev', command = next_file).grid(column = 2, row = 1, padx = button_pad, ipady=btny, ipadx=btnx)
+tk.Button(buttonFrame, text = 'Next >', command = prev_file).grid(column = 3, row = 1, padx = button_pad, ipady=btny, ipadx=btnx)
+tk.Button(buttonFrame, text = 'View Exif', command = exif).grid(column = 4, row = 1, padx = button_pad, ipady=btny, ipadx=btnx)
 
 def load_image():
     # change image on canvas
@@ -276,7 +294,7 @@ def load_image():
     img2 = img2.resize((468, 312), Image.ANTIALIAS)
     image2 = ImageTk.PhotoImage(img2)
     canvas.itemconfig(image_id, image = image2)
-    allImages = glob.glob('./viewFolder/*/*/*.*')
+    allImages = glob.glob('./imageFolder/*/*/*.*')
 
 exifList = []
 def load_data():
@@ -577,7 +595,7 @@ exifd_label = Label(mainFrameLeft, textvariable = exifd_sv).grid(column = og_gri
 columnspan = og_colspan, padx = og_padx,
 row = og_rowstart + 4, sticky = W)
 
-quick_file()
+#quick_file()
 
 menubar = Menu(root)
 filemenu = Menu(menubar, tearoff=0)

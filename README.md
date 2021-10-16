@@ -1,8 +1,9 @@
 
 # IBSNtools
+![alt text](./screenshot.jpg)
 
 ## Description
-IBSNtools is a set of tools for analyzing image ballistics in social networks written in Python. These tools can be used to organize and compare images uploaded to various social networks to the original image files. The view tool will display whether or not the image data has been modified after being uploaded to a social network. IBSNview analyzes whether or not the images have been re-named, re-sized or re-compressed. It also analyzes whether or not EXIF data has been stripped or modified. Quantization tables and EXIF data for the images can also be viewed.
+IBSNtools is a set of tools for analyzing image ballistics in social networks written in Python. These tools can be used to organize and compare images uploaded to various social networks to the original image files. The view tool will display whether or not the image data has been modified after being uploaded to a social network. IBSNview analyzes whether or not the images have been re-named, re-sized or re-compressed. It also analyzes whether or not EXIF data has been stripped or modified. Quantization tables and EXIF data for the images can be viewed, and the data can also be exported to CSV format for further analysis.
 
 
 ## Prerequisites
@@ -29,7 +30,7 @@ After installing prerequisites and organizing your image files, run IBSNview.py 
 ## Folder structure
 In order for the GUI-tool to work, the images have to adhere to a certain folder structure. There should be one parent folder that contains sub-folders named after the cameras used to take the photos. In the camera folders, there should be one folder for each original photo taken by the camera. Inside the image folder, there should be exactly one image file (the original photo), as well as one sub-folder for each social network you have uploaded the original image to. Inside the social network folders there should be exactly one image that was uploaded and downloaded from the respective social network platform.
 ```
- viewFolder
+ imageFolder
 ├── CANON_650D_720X480_INDOOR
 │   ├── IMG_2635
 │   │   ├── IMG_2635.JPG
@@ -182,3 +183,12 @@ After your images are sorted, you can run IBSNview.py to browse through the imag
 ```
 python3 IBSNview.py
 ```
+
+## Exporting Image Data
+After your images are sorted and everything looks good in IBSNview, you can run IBSNexport.py to export the data to a CSV file.
+
+```
+ python3 IBSNexport.py imageFolder fileName.csv
+```
+
+imageFolder is the folder containing your sorted images, and fileName.csv is the name of the output file.
