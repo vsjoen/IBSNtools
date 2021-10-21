@@ -3,7 +3,7 @@
 ![alt text](./screenshot.jpg)
 
 ## Description
-IBSNtools is a set of tools for analyzing image ballistics in social networks written in Python. These tools can be used to organize and compare images uploaded to various social networks to the original image files. The view tool will display whether or not the image data has been modified after being uploaded to a social network. IBSNview analyzes whether or not the images have been re-named, re-sized or re-compressed. It also analyzes whether or not EXIF data has been stripped or modified. Quantization tables and EXIF data for the images can be viewed, and the data can also be exported to CSV format for further analysis.
+IBSNtools is a set of tools for analyzing image ballistics in social networks written in Python. These tools can be used to organize and compare images uploaded to various social networks to the original image files. The IBSNview tool will display whether or not the image data has been modified after being uploaded to a social network. IBSNview analyzes whether or not the images have been re-named, re-sized or re-compressed. It also analyzes whether or not EXIF data has been stripped or modified. Quantization tables and EXIF data for the images can be viewed, and the data can also be exported to CSV format for further analysis.
 
 
 ## Prerequisites
@@ -25,7 +25,7 @@ pip install -r requirements.txt
 - Some of the EXIF data is encoded in byte format and therefore not human-readable.
 
 # How to use
-After installing prerequisites and organizing your image files, run IBSNview.py to start the program.
+After installing prerequisites and organizing the image files, the images need to be sorted into a specific folder structure. The IBSNsort tool can be used to automate the sorting. When the images have been sorted, the IBSNview tool can be used to look through the images. If everything looks good in the IBSNview, IBSNexport can be used to export the data to a CSV file.
 
 ## Folder structure
 In order for the GUI-tool to work, the images have to adhere to a certain folder structure. There should be one parent folder that contains sub-folders named after the cameras used to take the photos. In the camera folders, there should be one folder for each original photo taken by the camera. Inside the image folder, there should be exactly one image file (the original photo), as well as one sub-folder for each social network you have uploaded the original image to. Inside the social network folders there should be exactly one image that was uploaded and downloaded from the respective social network platform.
@@ -125,7 +125,7 @@ In order for the GUI-tool to work, the images have to adhere to a certain folder
 ```
 
 ## Automatically Sort Images
-You can use the IBSNsort.py script to automatically sort your downloaded image files. In a parent folder, create one folder called "unsorted" and one folder called "sorted". Ensure that your original image files follow the folder structure of camera folder -> image folder -> image, then move the camera folders you want to use into the "sorted" folder. In the "unsorted" folder, create one folder for each social network you have downloaded images from, then place all the photos from each social network in their respective folders. Now you should be able to run the IBSNsort.py script to automatically sort the images.
+You can use the IBSNsort script to automatically sort your downloaded image files. In a parent folder, create one folder called "unsorted" and one folder called "sorted". Ensure that your original image files follow the folder structure of camera folder -> image folder -> image file, then move the camera folders you want to use into the "sorted" folder. In the "unsorted" folder, create one folder for each social network you have downloaded images from, then place all the photos from each social network in their respective folders. Now you should be able to run the IBSNsort script to automatically sort the images with the following command.
 
 ```
 python3 IBSNsort.py sortFolder
@@ -178,17 +178,15 @@ sortFolder
 ```
 
 ## Viewing Image Data
-After your images are sorted, you can run IBSNview.py to browse through the images and their data.
+After your images are sorted, you can run IBSNview.py to browse through the images and their data with the following command.
 
 ```
 python3 IBSNview.py
 ```
 
 ## Exporting Image Data
-After your images are sorted and everything looks good in IBSNview, you can run IBSNexport.py to export the data to a CSV file.
+After your images are sorted and everything looks good in IBSNview, you can run IBSNexport.py to export the data to a CSV file. The following command will run the sort script, where imageFolder is the folder containing your sorted images, and fileName.csv is the name of the output file.
 
 ```
  python3 IBSNexport.py imageFolder fileName.csv
 ```
-
-imageFolder is the folder containing your sorted images, and fileName.csv is the name of the output file.

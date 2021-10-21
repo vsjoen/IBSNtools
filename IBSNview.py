@@ -23,7 +23,7 @@ fsize = None
 iwidth = None
 iheight = None
 exifd = None
-qtable_o = None
+qtable_o = []
 selected_image = None
 img2 = None
 image2 = None
@@ -38,6 +38,7 @@ selselImage = ''
 hueOffset = 160
 exifNone = {'0th': {}, 'Exif': {}, 'GPS': {}, 'Interop': {}, '1st': {}}
 folderBool = 0
+hasQuantize = 0
 
 # create the root window
 root = tk.Tk()
@@ -96,7 +97,7 @@ def select_file():
     global selected_image
     global selImage
     global folderBool
-    filetypes = [('JPEG files', '.jpeg .jpg')]
+    filetypes = [('Image files', '.jpeg .jpg .png .tif .tiff')]
 
     if folderBool == 1:
         folder = fd.askdirectory(
@@ -132,7 +133,8 @@ def path_leaf(path):
 
 def quick_file():
     global selected_image
-    selected_image = './imageFolder/CANON_650D_720X480_INDOOR/IMG_2635/IMG_2635.JPG'
+    selected_image = './test/Nikon D90/r000da54ft/r000da54ft.tif'
+    #selected_image = './imageFolder/CANON_650D_720X480_INDOOR/IMG_2635/IMG_2635.JPG'
     load_image()
     load_data()
 
@@ -353,8 +355,12 @@ def load_data():
 
     file_stats_o = os.stat(image_o)
 
-    quantize_o = imagedata_o.quantization
-    qtable_o = quantize_o
+    if hasattr(imagedata_o, 'quantization'):
+        quantize_o = imagedata_o.quantization
+        qtable_o = quantize_o
+        hasQuantize = 1
+    else:
+        hasQuantize = 0
 
     width_o, height_o = imagedata_o.size
 
@@ -387,51 +393,51 @@ def load_data():
     else:
         exifd_sv.set(f'EXIF Data: Yes')
 
+    if qtable_o != []:
+        for widget in qtFrame1.winfo_children():
+                widget.destroy()
 
-    for widget in qtFrame1.winfo_children():
+        for widget in qtFrame2.winfo_children():
+                widget.destroy()
+
+        tk.Label(qtFrame1, text = f'Quantization Table 1:').grid(column = 0,
+        row = 0, sticky = W, columnspan = 8)
+        tk.Label(qtFrame2, text = f'Quantization Table 2:').grid(column = 0,
+        row = 0, sticky = W, columnspan = 8)
+        n = 0
+        for i in range(8):
+            for j in range(8):
+                value = qtable_o[0][n]
+                hsv = hsv2rgb((hueOffset + value * 2) % 255, .5, .7)
+                rcol = '#%02x%02x%02x' % (int(hsv[0]), int(hsv[1]), int(hsv[2]))
+                if value < 10:
+                    numPad = 6
+                elif value < 100:
+                    numPad = 3
+                else:
+                    numPad = 0
+                tk.Label(qtFrame1, bg = rcol, fg = "white",
+                text = f'{value}').grid(sticky=(N, S, E, W), column = i, row = j + 1, padx = 1, pady = 1, ipadx = 2 + numPad, ipady = 3)
+                n = n + 1
+
+        n = 0
+        for i in range(8):
+            for j in range(8):
+                value = qtable_o[1][n]
+                hsv = hsv2rgb((hueOffset + value * 2) % 255, .5, .7)
+                rcol = '#%02x%02x%02x' % (int(hsv[0]), int(hsv[1]), int(hsv[2]))
+                if value < 10:
+                    numPad = 6
+                elif value < 100:
+                    numPad = 3
+                else:
+                    numPad = 0
+                tk.Label(qtFrame2, bg = rcol, fg = "white",
+                text = f'{value}').grid(sticky=(N, S, E, W), column = i, row = j + 1, padx = 1, pady = 1, ipadx = 2 + numPad, ipady = 3)
+                n = n + 1
+
+        for widget in mainFrameRight.winfo_children():
             widget.destroy()
-
-    for widget in qtFrame2.winfo_children():
-            widget.destroy()
-
-    tk.Label(qtFrame1, text = f'Quantization Table 1:').grid(column = 0,
-    row = 0, sticky = W, columnspan = 8)
-    tk.Label(qtFrame2, text = f'Quantization Table 2:').grid(column = 0,
-    row = 0, sticky = W, columnspan = 8)
-    n = 0
-    for i in range(8):
-        for j in range(8):
-            value = qtable_o[0][n]
-            hsv = hsv2rgb((hueOffset + value * 2) % 255, .5, .7)
-            rcol = '#%02x%02x%02x' % (int(hsv[0]), int(hsv[1]), int(hsv[2]))
-            if value < 10:
-                numPad = 6
-            elif value < 100:
-                numPad = 3
-            else:
-                numPad = 0
-            tk.Label(qtFrame1, bg = rcol, fg = "white",
-            text = f'{value}').grid(sticky=(N, S, E, W), column = i, row = j + 1, padx = 1, pady = 1, ipadx = 2 + numPad, ipady = 3)
-            n = n + 1
-
-    n = 0
-    for i in range(8):
-        for j in range(8):
-            value = qtable_o[1][n]
-            hsv = hsv2rgb((hueOffset + value * 2) % 255, .5, .7)
-            rcol = '#%02x%02x%02x' % (int(hsv[0]), int(hsv[1]), int(hsv[2]))
-            if value < 10:
-                numPad = 6
-            elif value < 100:
-                numPad = 3
-            else:
-                numPad = 0
-            tk.Label(qtFrame2, bg = rcol, fg = "white",
-            text = f'{value}').grid(sticky=(N, S, E, W), column = i, row = j + 1, padx = 1, pady = 1, ipadx = 2 + numPad, ipady = 3)
-            n = n + 1
-
-    for widget in mainFrameRight.winfo_children():
-        widget.destroy()
 
     # load modified
     image_m = []
@@ -506,8 +512,11 @@ def load_data():
             resized = 'Re-Sized: Yes'
 
         # check re-compress
-        if quantize_m == quantize_o:
-            recompressed = 'Re-Compressed: No'
+        if hasQuantize == 1:
+            if quantize_m == quantize_o:
+                recompressed = 'Re-Compressed: No'
+            else:
+                recompressed = 'Re-Compressed: Yes'
         else:
             recompressed = 'Re-Compressed: Yes'
 
@@ -595,7 +604,7 @@ exifd_label = Label(mainFrameLeft, textvariable = exifd_sv).grid(column = og_gri
 columnspan = og_colspan, padx = og_padx,
 row = og_rowstart + 4, sticky = W)
 
-#quick_file()
+quick_file()
 
 menubar = Menu(root)
 filemenu = Menu(menubar, tearoff=0)
