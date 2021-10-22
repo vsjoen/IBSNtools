@@ -517,7 +517,7 @@ def load_data():
                 recompressed = 'Re-Compressed: No'
             else:
                 recompressed = 'Re-Compressed: Yes'
-        else:q
+        else:
             recompressed = 'Re-Compressed: Yes'
 
         lines = 8
