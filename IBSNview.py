@@ -517,7 +517,7 @@ def load_data():
                 recompressed = 'Re-Compressed: No'
             else:
                 recompressed = 'Re-Compressed: Yes'
-        else:
+        else:q
             recompressed = 'Re-Compressed: Yes'
 
         lines = 8
@@ -604,7 +604,7 @@ exifd_label = Label(mainFrameLeft, textvariable = exifd_sv).grid(column = og_gri
 columnspan = og_colspan, padx = og_padx,
 row = og_rowstart + 4, sticky = W)
 
-quick_file()
+#quick_file()
 
 menubar = Menu(root)
 filemenu = Menu(menubar, tearoff=0)
