@@ -132,6 +132,7 @@ def select_file():
         debug()
 
 def debug():
+    print()
     #print('selImage: ', selImage)
     #print('allImages: ', len(allImages)-1)
     #print('folder: ', selectedFolder)
