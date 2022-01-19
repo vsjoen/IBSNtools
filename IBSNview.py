@@ -97,6 +97,7 @@ def select_file():
     global selected_image
     global selImage
     global folderBool
+    global selectedFolder
     filetypes = [('Image files', '.jpeg .jpg .png .tif .tiff')]
 
     if folderBool == 1:
@@ -106,11 +107,13 @@ def select_file():
         allFiles = glob.glob(folder + '/*/*/*.*')
         filename = allFiles[0]
         folderBool = 0
+        selectedFolder = folder
     else:
         filename = fd.askopenfilename(
         title ='Open Image',
         initialdir ='./',
         filetypes = filetypes)
+        selectedFolder = os.path.dirname(os.path.dirname(os.path.dirname(filename)))
 
     select_file.var = filename
     if hasattr(select_file, 'var'):
@@ -126,6 +129,12 @@ def select_file():
             n = n + 1
         load_image()
         load_data()
+        debug()
+
+def debug():
+    #print('selImage: ', selImage)
+    #print('allImages: ', len(allImages)-1)
+    #print('folder: ', selectedFolder)
 
 def path_leaf(path):
     head, tail = ntpath.split(path)
@@ -141,18 +150,19 @@ def quick_file():
 def donothing():
     print('Nothing')
 
-def next_file():
+def prev_file():
     global selImage
     global selected_image
-    if selImage >= 3:
+    if selImage >= len(allImages)-1:
         selImage = 0
     else:
         selImage = selImage + 1
     selected_image = allImages[selImage]
     load_image()
     load_data()
+    debug()
 
-def prev_file():
+def next_file():
     global selImage
     global selected_image
     if selImage <= 0:
@@ -162,6 +172,7 @@ def prev_file():
     selected_image = allImages[selImage]
     load_image()
     load_data()
+    debug()
 
 def preferences():
     prefWin = Toplevel(root)
@@ -287,6 +298,9 @@ tk.Button(buttonFrame, text = '< Prev', command = next_file).grid(column = 2, ro
 tk.Button(buttonFrame, text = 'Next >', command = prev_file).grid(column = 3, row = 1, padx = button_pad, ipady=btny, ipadx=btnx)
 tk.Button(buttonFrame, text = 'View Exif', command = exif).grid(column = 4, row = 1, padx = button_pad, ipady=btny, ipadx=btnx)
 
+selectedFolder = 'none'
+
+
 def load_image():
     # change image on canvas
     global img2
@@ -296,7 +310,9 @@ def load_image():
     img2 = img2.resize((468, 312), Image.ANTIALIAS)
     image2 = ImageTk.PhotoImage(img2)
     canvas.itemconfig(image_id, image = image2)
-    allImages = glob.glob('./imageFolder/*/*/*.*')
+    allImages = glob.glob(selectedFolder + '/*/*/*.*')
+    for widget in mainFrameRight.winfo_children():
+        widget.destroy()
 
 exifList = []
 def load_data():
@@ -605,6 +621,7 @@ columnspan = og_colspan, padx = og_padx,
 row = og_rowstart + 4, sticky = W)
 
 #quick_file()
+debug()
 
 menubar = Menu(root)
 filemenu = Menu(menubar, tearoff=0)
