@@ -510,6 +510,13 @@ def load_data():
         #check exifdata
         if exifdata_o == exifNone:
             'EXIF Data: No EXIF'
+            if exifdata_m2 == exifNone:
+                exiftrue = 'EXIF Data: No Data'
+            else:
+                if exifdata_m2 == exifdata_o:
+                    exiftrue = 'EXIF Data: Identical'
+                else:
+                    exiftrue = 'EXIF Data: Edited'
         else:
             if exifdata_m2 == exifNone:
                 exiftrue = 'EXIF Data: Deleted'
