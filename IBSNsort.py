@@ -10,11 +10,12 @@ height = 300
 dim = (width, height)
 
 
-folderArg = './' + sys.argv[1] + '/'
+folderArg = sys.argv[1]
 socialNets = glob.glob(folderArg + 'unsorted/*/')
 
+counter = 1
 for folder in socialNets:
-    downList = glob.glob(folder + '/*.jpg')
+    downList = glob.glob(folder + '/*.*')
     ogList = glob.glob(folderArg + 'sorted/*/*/*.*')
     socialName = os.path.basename(os.path.dirname(folder))
 
@@ -57,6 +58,7 @@ for folder in socialNets:
 
         return (len(good_points) / number_keypoints * 100)
     for i in ogList:
+        print(counter)
         print(i)
         for j in downList:
             sim = similarity(i, j)
@@ -68,10 +70,11 @@ for folder in socialNets:
                 isExist = os.path.exists(copyFolder)
                 if not isExist:
                     os.makedirs(copyFolder)
-                    print(socialName + " folder created")
                     copyfile(j, copyFile)
+                    print(socialName + " folder created")
                     print("file copied" + '\n')
                 else:
                     copyfile(j, copyFile)
                     print(socialName + " folder exists")
                     print("file copied" + '\n')
+        counter = counter + 1

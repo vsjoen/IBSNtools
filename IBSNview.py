@@ -37,6 +37,7 @@ selImage = 0
 selselImage = ''
 hueOffset = 160
 exifNone = {'0th': {}, 'Exif': {}, 'GPS': {}, 'Interop': {}, '1st': {}}
+quantizeNone = {0: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 1: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}
 folderBool = 0
 hasQuantize = 0
 
@@ -132,10 +133,9 @@ def select_file():
         debug()
 
 def debug():
-    print()
-    #print('selImage: ', selImage)
-    #print('allImages: ', len(allImages)-1)
-    #print('folder: ', selectedFolder)
+    print('selImage: ', selImage)
+    print('allImages: ', len(allImages))
+    print('folder: ', selectedFolder)
 
 def path_leaf(path):
     head, tail = ntpath.split(path)
@@ -375,9 +375,9 @@ def load_data():
     if hasattr(imagedata_o, 'quantization'):
         quantize_o = imagedata_o.quantization
         qtable_o = quantize_o
-        hasQuantize = 1
     else:
-        hasQuantize = 0
+        quantize_o = quantizeNone
+        qtable_o = quantize_o
 
     width_o, height_o = imagedata_o.size
 
@@ -481,7 +481,10 @@ def load_data():
 
         fsize_m = file_stats_m.st_size
 
-        quantize_m = imagedata_m.quantization
+        if hasattr(imagedata_m, 'quantization'):
+            quantize_m = imagedata_m.quantization
+        else:
+            quantize_m = quantizeNone
 
         width_m, height_m = imagedata_m.size
 
@@ -529,11 +532,8 @@ def load_data():
             resized = 'Re-Sized: Yes'
 
         # check re-compress
-        if hasQuantize == 1:
-            if quantize_m == quantize_o:
-                recompressed = 'Re-Compressed: No'
-            else:
-                recompressed = 'Re-Compressed: Yes'
+        if quantize_m == quantize_o:
+            recompressed = 'Re-Compressed: No'
         else:
             recompressed = 'Re-Compressed: Yes'
 
@@ -622,7 +622,6 @@ columnspan = og_colspan, padx = og_padx,
 row = og_rowstart + 4, sticky = W)
 
 #quick_file()
-debug()
 
 menubar = Menu(root)
 filemenu = Menu(menubar, tearoff=0)
